@@ -1,8 +1,22 @@
 @api_HostAddress = http://localhost:5237
 
+### Get All
 GET {{api_HostAddress}}/api/stocks
 Accept: application/json
 
-###
+### Get by Id
 GET {{api_HostAddress}}/api/stocks/1
 Accept: application/json
+
+### Create Stock
+POST {{api_HostAddress}}/api/stocks
+Content-Type: application/json
+
+{
+    "symbol" : "TLR",
+    "companyName" : "Doin nah",
+    "purchase" : 1000.00,
+    "lastDiv" : 12.00,
+    "industry" : "Mahsn",
+    "marketCap" : 686868
+}

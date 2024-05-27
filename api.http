@@ -44,3 +44,16 @@ DELETE  {{api_HostAddress}}/api/stocks/5
 ### Get All
 GET {{api_HostAddress}}/api/comments
 Accept: application/json
+
+### Get by Id
+GET {{api_HostAddress}}/api/comments/1
+Accept: application/json
+
+### CREATE COMMENT 
+POST {{api_HostAddress}}/api/stocks/1
+Content-Type: application/json
+
+{
+  "title": "lokin nah new stock",
+  "content": "you need 2 leave"
+}

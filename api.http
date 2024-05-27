@@ -27,7 +27,7 @@ Content-Type: application/json
 
 {
     "symbol" : "AMZN",
-    "companyName" : "Amazon",
+    "companyName" : "Amazons",
     "purchase" : 1000.00,
     "lastDiv" : 12.00,
     "industry" : "Offered",
@@ -35,4 +35,12 @@ Content-Type: application/json
 }
 
 ### Delete Stock
-DELETE  {{api_HostAddress}}/api/stocks/8
+DELETE  {{api_HostAddress}}/api/stocks/5
+
+
+##################################################### 
+############## Comments #############################
+
+### Get All
+GET {{api_HostAddress}}/api/comments
+Accept: application/json

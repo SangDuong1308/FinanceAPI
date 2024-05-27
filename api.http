@@ -20,3 +20,19 @@ Content-Type: application/json
     "industry" : "Mahsn",
     "marketCap" : 686868
 }
+
+### Update Stock
+PUT {{api_HostAddress}}/api/stocks/7
+Content-Type: application/json
+
+{
+    "symbol" : "AMZN",
+    "companyName" : "Amazon",
+    "purchase" : 1000.00,
+    "lastDiv" : 12.00,
+    "industry" : "Offered",
+    "marketCap" : 66668888
+}
+
+### Delete Stock
+DELETE  {{api_HostAddress}}/api/stocks/8

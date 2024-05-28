@@ -27,7 +27,7 @@ Content-Type: application/json
 
 {
     "symbol" : "AMZN",
-    "companyName" : "Amazons",
+    "companyName" : "Amazon",
     "purchase" : 1000.00,
     "lastDiv" : 12.00,
     "industry" : "Offered",
@@ -35,7 +35,7 @@ Content-Type: application/json
 }
 
 ### Delete Stock
-DELETE  {{api_HostAddress}}/api/stocks/5
+DELETE {{api_HostAddress}}/api/stocks/9
 
 
 ##################################################### 
@@ -50,10 +50,22 @@ GET {{api_HostAddress}}/api/comments/1
 Accept: application/json
 
 ### CREATE COMMENT 
-POST {{api_HostAddress}}/api/stocks/1
+POST {{api_HostAddress}}/api/comments/3
 Content-Type: application/json
 
 {
   "title": "lokin nah new stock",
   "content": "you need 2 leave"
+}
+
+### DELETE COMMENT 
+DELETE {{api_HostAddress}}/api/comments/1002
+
+### UPDATTE COMMENT 
+PUT {{api_HostAddress}}/api/comments/1004
+Content-Type: application/json
+
+{
+  "title": "new comment for new boi",
+  "content": "a little boy"
 }

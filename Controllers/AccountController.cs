@@ -49,7 +49,12 @@ namespace api.Controllers
                        Email = user.Email,
                        Token = _tokenService.CreateToken(user)
                    }
-               );
+                );
+
+                //return Ok(new LoginResponseDto
+                //{
+                     
+                //});
             }
             catch (Exception ex)
             {

@@ -14,9 +14,9 @@ namespace api.Services
         public TokenService(IConfiguration config)
         {
             _config = config;
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SigningKey"]));
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Secret"]));
         }
-        public string CreateToken(AppUser user)
+        public JwtSecurityToken CreateToken(AppUser user)
         {
             var claims = new List<Claim>
             {
@@ -26,20 +26,31 @@ namespace api.Services
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7),
-                SigningCredentials = creds,
-                Issuer = _config["JWT:Issuer"],
-                Audience = _config["JWT:Audience"]
-            };
+            //var tokenDescriptor = new SecurityTokenDescriptor
+            //{
+            //    Subject = new ClaimsIdentity(claims),
+            //    Expires = DateTime.Now.AddSeconds(30),
+            //    SigningCredentials = creds,
+            //    Issuer = _config["JWT:Issuer"],
+            //    Audience = _config["JWT:Audience"]
+            //};
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = new JwtSecurityToken
+            (
+                claims : claims,
+                expires : DateTime.UtcNow.AddSeconds(30),
+                signingCredentials : creds,
+                issuer : _config["JWT:Issuer"],
+                audience : _config["JWT:Audience"]
+            );
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            //var tokenHandler = new JwtSecurityTokenHandler();
 
-            return tokenHandler.WriteToken(token);
+            //var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            //return tokenHandler.WriteToken(token);
+
+            return token;
         }
     }
 }

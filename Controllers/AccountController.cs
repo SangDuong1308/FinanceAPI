@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace api.Controllers
@@ -42,19 +43,22 @@ namespace api.Controllers
 
                 if (!result.Succeeded) return Unauthorized("Username not found and/or password incorrect");
 
-                return Ok(
-                   new NewUserDto
-                   {
-                       UserName = user.UserName,
-                       Email = user.Email,
-                       Token = _tokenService.CreateToken(user)
-                   }
-                );
+                JwtSecurityToken token = _tokenService.CreateToken(user);
 
-                //return Ok(new LoginResponseDto
-                //{
-                     
-                //});
+                //return Ok(
+                //   new NewUserDto
+                //   {
+                //       UserName = user.UserName,
+                //       Email = user.Email,
+                //       Token = _tokenService.CreateToken(user)
+                //   }
+                //);
+
+                return Ok(new LoginResponseDto
+                {
+                    Jwt = new JwtSecurityTokenHandler().WriteToken(token),
+                    Expiration = token.ValidTo,
+                });
             }
             catch (Exception ex)
             {
@@ -88,7 +92,6 @@ namespace api.Controllers
                         {
                             UserName = appUser.UserName,
                             Email = appUser.Email,
-                            Token = _tokenService.CreateToken(appUser)
                         });
                     }
                     else

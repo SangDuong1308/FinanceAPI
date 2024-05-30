@@ -1,6 +1,7 @@
 ﻿using api.Dtos.Account;
 using api.Interfaces;
 using api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -157,5 +158,31 @@ namespace api.Controllers
                 RefreshToken = refreshDto.RefreshToken
             });
         }
+
+        [HttpDelete("Revoke")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Revoke()
+        {
+            _logger.LogInformation("Revoke called");
+
+            var username = HttpContext.User.Identity?.Name;
+
+            if (username is null) return Unauthorized();
+            var user = await _userManager.FindByNameAsync(username);
+
+            if (user is null) return Unauthorized();
+
+            user.RefreshToken = null;
+
+            await _userManager.UpdateAsync(user);
+
+            _logger.LogInformation("Revoke succeeded");
+
+            return Ok();
+        }
+
     }
 }

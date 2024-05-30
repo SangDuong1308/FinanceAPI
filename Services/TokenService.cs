@@ -42,7 +42,7 @@ namespace api.Services
             var token = new JwtSecurityToken
             (
                 claims : claims,
-                expires : DateTime.UtcNow.AddSeconds(30),
+                expires : DateTime.UtcNow.AddMinutes(5),
                 signingCredentials : creds,
                 issuer : _config["JWT:Issuer"],
                 audience : _config["JWT:Audience"]

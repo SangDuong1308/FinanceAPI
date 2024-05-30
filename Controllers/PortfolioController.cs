@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
-    [Route("api/portolio")]
+    [Route("api/portfolio")]
     [ApiController]
     public class PortfolioController : ControllerBase
     {
@@ -25,7 +25,8 @@ namespace api.Controllers
         [Authorize]
         public async Task<IActionResult> GetUserPortfolio()
         {
-            var username = User.GetUsername();
+            //var username = User.GetUsername();
+            var username = HttpContext.User.Identity?.Name;
             var appUser = await _userManager.FindByNameAsync(username);
             var userPortfolio = await _portfolioRepo.GetUserPortfolio(appUser);
             return Ok(userPortfolio);
@@ -35,7 +36,8 @@ namespace api.Controllers
         [Authorize]
         public async Task<IActionResult> AddPortfolio(string symbol)
         {
-            var username = User.GetUsername();
+            //var username = User.GetUsername();
+            var username = HttpContext.User.Identity?.Name;
             var appUser = await _userManager.FindByNameAsync(username);
             var stock = await _stockRepo.GetBySymbolAsync(symbol);
 
@@ -62,7 +64,8 @@ namespace api.Controllers
         [Authorize]
         public async Task<IActionResult> DeletePortfolio(string symbol)
         {
-            var username = User.GetUsername();
+            //var username = User.GetUsername();
+            var username = HttpContext.User.Identity?.Name;
             var appUser = await _userManager.FindByNameAsync(username);
             var userPorfolio = await _portfolioRepo.GetUserPortfolio(appUser);
 
